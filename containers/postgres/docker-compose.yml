@@ -1,0 +1,13 @@
+version: "3"
+services:
+  postgres:
+    image: "postgres"
+    container_name: "${WYT_PSQL_CONTAINER_NAME}"
+    environment:
+      POSTGRES_DB: ${WYT_PSQL_DB}
+      POSTGRES_USER: ${WYT_PSQL_USER}
+      POSTGRES_PASSWORD: ${WYT_PSQL_PASSWORD}
+    ports:
+      - "${WYT_PSQL_LISTEN_PORT}:5432"
+    volumes:
+      - ${WYT_PSQL_VOLUME_PATH}:/var/lib/postgresql/data
