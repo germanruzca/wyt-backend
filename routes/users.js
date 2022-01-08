@@ -6,9 +6,9 @@ const User = require('../src/database/models/users.model');
 /* GET users listing. */
 router.post('/', async function(req, res, next) {
 
-  const { name } = req.body;
+  const  user = req.body;
   try {
-    const result = await User.create({"nombre": name});
+    const result = await User.create(user);
 
     res.json(result);
   } catch (error) {
