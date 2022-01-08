@@ -1,9 +1,8 @@
-"use strict";
-
+const bcrypt = require("bcrypt");
 const Sequelize = require('sequelize');
 const DataTypes = require('sequelize').DataTypes;
-const db = require('../../../config/db');
 
+const db = require('../../config/db');
 const User = db.define(
   'User', 
   {
@@ -13,7 +12,7 @@ const User = db.define(
       defaultValue: DataTypes.UUIDV4,
       primaryKey: true,
     },
-    fisrtName: {
+    firstName: {
       type: Sequelize.STRING,
       allowNull: false,
     },
@@ -69,7 +68,32 @@ const User = db.define(
       allowNull: false,
       defaultValue: new Date(),
     },
+  },
+  {
+    freezeTableName: true,
+    hooks : {
+      beforeCreate: async (user) => {
+        user.password = await bcrypt.hash(user.password, 10);
+      },
+      beforeUpdate: async (user) => {
+        if (user.password) {
+          user.password = await bcrypt.hash(user.password, 12);
+        }
+      }
+    },
+    indexes: [
+      {
+        unique: true,
+        fields: ["firstName", "lastName"],
+      },
+      {
+        unique: true,
+        fields: ["username"],
+      },
+    ]
   }
-)
+);
+
+
 
 module.exports = User;

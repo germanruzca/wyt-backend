@@ -9,7 +9,7 @@ var usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts.route');
 
 const db = require('./config/db');
-require('./src/database/models/users.model');
+require('./src/models/users.model');
 db.sync().then(() => console.log('DB connected')).catch(err => console.log(err));
 
 var app = express();
