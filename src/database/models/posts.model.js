@@ -43,26 +43,26 @@ module.exports = function( sequelize, DataTypes) {
       freezeTableName: true,
       indexes: [
         {
-          unique: true,
+          unique: false,
           fields: ['title']
         },
         {
-          unique: true,
+          unique: false,
           fields: ['mediaTitle']
         }
       ]
     }
   );
 
-  // Post.associate = function (models) {
-  //   Post.belongsTo(models.User, { 
-  //     foreignKey: "userId"
-  //   });
+  Post.associate = function (models) {
+    Post.belongsTo(models.User, { 
+      foreignKey: "userId"
+    });
 
-  //   Post.belongsTo(models.Types, { 
-  //     foreignKey: "typeId" 
-  //   });
-  // }
+    Post.belongsTo(models.Type, { 
+      foreignKey: "typeId" 
+    });
+  }
 
   return Post;
 };

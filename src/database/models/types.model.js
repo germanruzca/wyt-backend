@@ -25,10 +25,6 @@ module.exports = function( sequelize, DataTypes) {
         {
           unique: true,
           fields: ['name']
-        },
-        {
-          unique: true,
-          fields: ['description']
         }
       ]
     }

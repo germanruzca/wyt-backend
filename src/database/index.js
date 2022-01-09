@@ -11,12 +11,11 @@ const { name, username, password } = database;
 const db = {};
 
 let sequelize = new Sequelize(name, username, password, sequelizeOptions);
-console.log(modelsPath)
+
 fs
 .readdirSync(modelsPath)
 .filter((file) => file.indexOf('.') !== 0 && file !== basename && file.slice(-3) === '.js')
 .forEach((file) => {
-  console.log(db, 'a')
   const model = require(path.join(modelsPath, file))(sequelize, Sequelize.DataTypes);
   db[model.name] = model;
   

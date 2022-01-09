@@ -53,10 +53,12 @@ module.exports = function( sequelize, DataTypes){
       typeUser: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true, 
       },
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
+        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -73,17 +75,18 @@ module.exports = function( sequelize, DataTypes){
       freezeTableName: true,
       hooks : {
         beforeCreate: async (user) => {
-          user.password = await bcrypt.hash(user.password, 10);
+          user.password = await bcrypt.hash(user.password, 12);
         },
         beforeUpdate: async (user) => {
           if (user.password) {
+            console.log(user.password)
             user.password = await bcrypt.hash(user.password, 12);
           }
         }
       },
       indexes: [
         {
-          unique: true,
+          unique: false,
           fields: ["firstName", "lastName"],
         },
         {
