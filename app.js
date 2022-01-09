@@ -8,9 +8,10 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts.route');
 
-const db = require('./config/db');
-require('./src/models/users.model');
-db.sync().then(() => console.log('DB connected')).catch(err => console.log(err));
+db = require('./src/database');
+
+
+db.sequelize.sync().then(() => console.log('DB connected')).catch(err => console.log(err));
 
 var app = express();
 
