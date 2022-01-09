@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-  const Auth = sequelize.define(
-    'Auth',
+  const Token = sequelize.define(
+    'Token',
     {
       id: {
         type: DataTypes.UUID,
@@ -14,8 +14,11 @@ module.exports = function(sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       }
+    }, 
+    {
+      freezeTableName: true,
     }
   );
 
-  return Auth;
+  return Token;
 };

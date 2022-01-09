@@ -1,6 +1,7 @@
-const { User: User, sequelize: t } = require('../database');
+const { User: User, Token: Token, sequelize: t } = require('../database');
 const createError = require('http-errors');
 const {jsonResponse} = require('../lib/erros/jsonError');
+const bcrypt = require("bcrypt");
 
 const { createAccessToken, createRefreshToken} = require('../lib/token')
 
@@ -52,10 +53,59 @@ const authController = {
     }
   },
   logIn: async (req, res, next) => {
-    
+    const {username, password} = req.body;
+    try{
+      const user = await User.findOne(
+        {
+          where: {
+            username: username
+          }
+        });
+
+      if(user){
+          const isValidPassword = await bcrypt.compare(password, user.password);
+          if(isValidPassword){
+            const accessToken = createAccessToken(username);
+            const refreshToken = await createRefreshToken(username);
+
+            return res.json({
+                message: "succes",
+                accessToken, 
+                refreshToken
+            });
+          }else{
+              return next(new Error('username and/or password incorrect'));
+          }
+             
+      }else{
+          return next(new Error('user does not exist'));
+      }
+
+    }catch(err){
+        console.log(err);
+    }
   },
   logOut: async (req, res, next) => {
+    const {refreshToken} = req.body;
+    const transaction = await t.transaction();
+    try{
+        await Token.destroy({
+          where: {
+              token: refreshToken
+            }
+        },
+        {
+          transaction:transaction,
+        });
 
+        await transaction.commit();
+        res.json({
+            success: 'Token removed'
+        });
+    }catch(ex){
+      await transaction.rollback();
+      return next(new Error(`Error loging out the user ${ex}`));
+    }
   },
   refreshToken: async (req, res, next) => {
 

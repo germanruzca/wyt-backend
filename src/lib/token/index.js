@@ -4,7 +4,7 @@ const constants = require('./constants')
 
 const { actionSecret, refreshSecret } = config.service;
 
-const { Auth: Auth, sequelize: t } = require('../../database');
+const { Token: Token, sequelize: t } = require('../../database');
 
 const getTTL = (type) => {
   return constants.TTLS[type]
@@ -42,7 +42,7 @@ const createRefreshToken = async () => {
 
   try {
     const transaction = await t.transaction();
-    const refreshTokenToCreate = await Auth.create({token: refreshToken});
+    const refreshTokenToCreate = await Token.create({token: refreshToken});
 
     await transaction.commit();
     return refreshToken;
