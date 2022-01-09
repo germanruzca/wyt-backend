@@ -100,6 +100,6 @@ module.exports = function( sequelize, DataTypes){
       foreignKey: "userId"
     });
   }
-
+  
   return User;
 };

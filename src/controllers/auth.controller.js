@@ -2,9 +2,12 @@ const { User: User, sequelize: t } = require('../database');
 const createError = require('http-errors');
 const {jsonResponse} = require('../lib/erros/jsonError');
 
+const { createAccessToken, createRefreshToken} = require('../lib/token')
+
 const authController = {
   signUp: async (req, res, next) => {
     const user = req.body;
+    const { username, password } = user;
     user.isActive = true ;
     user.typeUser = true;
 
@@ -19,13 +22,24 @@ const authController = {
           individualHooks: true,
           transaction: transaction
         });
-        await transaction.commit()
-        
-        res.json(jsonResponse(200, 
-          {
-            message: 'User created successfully',
-          }
-        ));
+
+        const exists = await User.findOne({where: { username: username }});
+        if(exists) {
+          next(createError(400, 'User already exists.'));
+        } else {
+          const accessToken = createAccessToken(username);
+          const refreshToken = await createRefreshToken(username);
+
+          await transaction.commit()
+
+          res.json(jsonResponse(200, 
+            {
+              message: 'User created successfully',
+              accessToken,
+              refreshToken
+            }
+          ));
+        }
       } catch (error) {
         await transaction.rollback();
 
