@@ -53,12 +53,10 @@ module.exports = function( sequelize, DataTypes){
       typeUser: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true, 
       },
       isActive: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: true,
       },
       createdAt: {
         type: DataTypes.DATE,
