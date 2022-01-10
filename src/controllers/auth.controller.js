@@ -2,8 +2,11 @@ const { User: User, Token: Token, sequelize: t } = require('../database');
 const createError = require('http-errors');
 const {jsonResponse} = require('../lib/erros/jsonError');
 const bcrypt = require("bcrypt");
+const { service } = require('../../config/index');
+const jwt = require('jsonwebtoken')
+const { refreshSecret, actionSecret } = service;
 
-const { createAccessToken, createRefreshToken} = require('../lib/token')
+const { createAccessToken, createRefreshToken, getTTL} = require('../lib/token')
 
 const authController = {
   signUp: async (req, res, next) => {
@@ -108,7 +111,41 @@ const authController = {
     }
   },
   refreshToken: async (req, res, next) => {
+    const { refreshToken } = req.body;
+    if(!refreshToken){
+        return next(new Error('No token provided'));
+    }
 
+    try{
+
+        const tokenToChange = await Token.findOne({
+          where: {
+            token: refreshToken
+          }
+        });
+        if(!tokenToChange){
+            return next(new Error('No token found'));
+        }
+
+        console.log(tokenToChange.token)
+        console.log(refreshSecret)
+        const payload = jwt.verify(tokenToChange.token, refreshSecret);
+        console.log(payload)
+        const accessToken = jwt.sign(
+          {
+            user: payload
+          }, 
+          actionSecret, 
+          {
+            expiresIn: getTTL("access")
+          });
+
+        res.json({
+            accessToken
+        });
+    }catch(err){
+      res.json({status: 500,message: err.message});
+    }
   },
 };
 

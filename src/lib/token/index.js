@@ -26,8 +26,7 @@ const createAccessToken = (username) => {
   return accessToken;
 }
 
-const createRefreshToken = async () => {
-  const { username } = this;
+const createRefreshToken = async (username) => {
   const refreshToken = jwt.sign(
     { 
       user: { 
@@ -52,4 +51,4 @@ const createRefreshToken = async () => {
   }
 }
 
-module.exports = { createAccessToken, createRefreshToken };
+module.exports = { createAccessToken, createRefreshToken, getTTL };

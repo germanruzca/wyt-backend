@@ -11,7 +11,8 @@ exports.checkAuth = function(req, res, next) {
 
     if(bearer == 'Bearer' && token!=undefined) {
       try {
-        const payload = jwt.verify(token, actionSecret)
+        const payload = jwt.verify(token, actionSecret);
+        console.log(actionSecret)
         req.user = payload.user;
         next()
       } catch (e) {
