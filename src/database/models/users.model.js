@@ -3,7 +3,7 @@
 const bcrypt = require("bcrypt");
 
 module.exports = function( sequelize, DataTypes){
-  let User = sequelize.define(
+  const User = sequelize.define(
     'User', 
     {
       id: {
@@ -100,6 +100,6 @@ module.exports = function( sequelize, DataTypes){
       foreignKey: "userId"
     });
   }
-  
+
   return User;
 };

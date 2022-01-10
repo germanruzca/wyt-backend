@@ -1,13 +1,15 @@
-const { Post: Post, sequelize: t } = require('../database')
+const { Post: Post, sequelize: t } = require('../database');
+const {jsonResponse} = require('../lib/response/jsonResponse');
 
 const postsController = {
   getPosts: async (req, res, next) => {
     try {
       const posts = await Post.findAll();
 
-      res.json({status: 200, message: 'success', data: posts});
+      res.json(jsonResponse(200, posts));
+
     } catch (error) {
-      res.json({status:500, message: error.message, data: '[]'})
+      res.json(jsonResponse(500, error));
     }
   },
   getPostById: async (req, res, next) => {
@@ -16,9 +18,11 @@ const postsController = {
     try {
       const post = Post.findByPk(id);
 
-      res.json({status:200, message: 'success', data: post});
+      res.json(jsonResponse(200, post));
+
     } catch (error) {
-      res.json({status:500, message: error.message, data:'[]'})
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   createPost: async (req, res, next) => {
@@ -33,10 +37,12 @@ const postsController = {
       });
 
       await transaction.commit();
-      res.json({status:200, message:'success', data: postToCreate});
+      res.json(jsonResponse(200, postToCreate));
+
     } catch (error) {
       await transaction.rollback();
-      res.json({status:500, message:error.message, data: '[]'});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   updatePost: async (req, res, next) => {
@@ -57,10 +63,12 @@ const postsController = {
       });
 
       await transaction.commit();
-      res.json({status: 200, message: 'success', data: postToUpdate});
+      res.json(jsonResponse(200, postToUpdate));
+
     } catch (error) {
       await transaction.rollback();
-      res.json({status:500, message:error.message, data: '[]'});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   deletePost: async (req, res, next) => {
@@ -77,10 +85,12 @@ const postsController = {
       });
 
       await transaction.commit();
-      res.json({status: 200, message: `The post with the id: ${id} was deleted`});
+      res.json(jsonResponse(200, id));
+      
     } catch (error) {
       await transaction.rollback();
-      res.json({status:500, message:error.message, data: '[]'});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
 };

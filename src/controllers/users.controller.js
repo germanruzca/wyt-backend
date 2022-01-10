@@ -1,15 +1,15 @@
 const { User: User, sequelize: t } = require('../database');
+const {jsonResponse} = require('../lib/response/jsonResponse');
 
 const usersController  = {
   getUsers: async (req, res, next) => {
     try {
 
-      const result = await User.findAll();
-      res.json({status: 200, result: result});
-
+      const users = await User.findAll();
+      res.json(jsonResponse(200, users));
     } catch (error) {
-
-      res.json({status: 500, message: error})
+      res.json(jsonResponse(500, ''));
+      next();
     }
   },
   getUserById: async (req, res, next) => {
@@ -17,10 +17,12 @@ const usersController  = {
 
     try {
       const user = await User.findByPk(id);
-      res.json({status: 200, message: user});
 
+      res.json(jsonResponse(200, user));
+      
     } catch (error) {
-      res.json({status: 500, message: error});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   createUser: async (req, res, next) => {
@@ -35,11 +37,12 @@ const usersController  = {
       });
 
       await transaction.commit();
-      res.json({status: 200, message: userCreated});
+      res.json(jsonResponse(200, userCreated));
 
     } catch (error) {
       await transaction.rollback();
-      res.json({status: 500, message: error});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   updateUser: async (req, res, next) => {
@@ -60,11 +63,12 @@ const usersController  = {
       });
 
       await transaction.commit();
-      res.json({status:200, message:userUpdated});
+      res.json(jsonResponse(200, userUpdated));
 
     } catch (error) {
       await transaction.rollback();
-      res.json({status:500, message:error});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   deleteUser: async (req, res, next) => {
@@ -83,11 +87,12 @@ const usersController  = {
       });
 
       await transaction.commit();
-      res.json({status: '200',message: `User with the id: ${id} deleted`});
+      res.json(jsonResponse(200, id));
 
     } catch (error) {
       await transaction.rollback();
-      res.json({status: '500',message:"The user was not deleted."});
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
 };

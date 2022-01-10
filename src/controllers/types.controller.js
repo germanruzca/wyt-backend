@@ -1,33 +1,28 @@
 const { Type: Type, sequelize: t } = require('../database');
+const { jsonResponse } = require('../lib/response/jsonResponse');
 
 const typesController = {
   getTypes: async (req, res, next) => {
     try {
       const types = await Type.findAll();
-      res.json({
-        status: 200,
-        message: types
-      });
+
+      res.json(jsonResponse(200, types));
+
     } catch (error) {
-      res.json({
-        status: 500,
-        message: error.message
-      });
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   getTypeById: async (req, res, next) => {
     const { id } = req.params
     try {
       const type = await Type.findByPk(id);
-      res.json({
-        status: 200,
-        message: type
-      });
+
+      res.json(jsonResponse(200, type));
+
     } catch (error) {
-      res.json({
-        status: 500,
-        message: error.message
-      });
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   createType: async (req, res, next) => {
@@ -41,13 +36,12 @@ const typesController = {
       });
       
       await transaction.commit();
-      res.json({status: 200, message: typeToCreate});
+      res.json(jsonResponse(200, typeToCreate));
+
     } catch (error) {
       await transaction.rollback();
-      res.json({
-        status: 500, 
-        message: error.message
-      })
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   updateType: async (req, res, next) => {
@@ -67,13 +61,12 @@ const typesController = {
       });
 
       await transaction.commit();
-      res.json({
-        status: 200,
-        message: typeToUpdate,
-      })
+      res.json(jsonResponse(200, typeToUpdate));
+
     } catch (error) {
       await transaction.rollback();
-      res.json({status: 500, message: error.message})
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   },
   deleteType: async (req, res, next) => {
@@ -91,10 +84,12 @@ const typesController = {
       });
 
       await transaction.commit();
-      res.json({status: 500, message:`The type with the id: ${id} was deleted`});
+      res.json(jsonResponse(200, id));
+      
     } catch (error) {
       await transaction.rollback();
-      res.json({status: 500, message: error.message})
+      res.json(jsonResponse(500, error.message));
+      next();
     }
   }
 };

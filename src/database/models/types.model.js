@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function( sequelize, DataTypes) {
-  let Type = sequelize.define(
+  const Type = sequelize.define(
     'Type',
     {
       id: {
