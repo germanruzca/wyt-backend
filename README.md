@@ -1,4 +1,4 @@
-# API of WYT ( What you thought?).
+# API of WYT ( What you thinking?).
 
 This the repository to start the api with fur end-points.
 
