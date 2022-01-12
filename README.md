@@ -1,28 +1,77 @@
-# API of WYT ( What you thinking?).
+# API app of WYT ( What you thinking?).
 
-This the repository to start the api with fur end-points.
+This repository is part of my WYT.com project, is just an aplication to give recommendations of movies, books, tv-shows and music.
+
+## 1: Technologies
+- nodeJS
+- Express
+- Docker
+- Sequelize
+- Postrgres
+****
+  
+## 2: Requirements
+You need Docker and Docker Compose on your computer, because there is a `docker-compose.yml` file that creates a container to the Postgres database.
+
+Also you need nodeJS, this project were maded in the 16 version of node.
+
+## 3: Clone and run the project.
 
 - Clone the repository
   ```bash 
   git clone https://github.com/germanruzca/wyt-backend.git
+
+  cd wyt-backend
   ```
 - Install dependencies
   ```bash
   npm install
   ```
-- Install docker images
-  >/containers/
+- Go the docker folder
   ```bash
-  docker-compose up
+   cd containers
   ```
+- Install docker images and create container.
+  ```bash
+    docker-compose up
+  ```
+- Start the project
+  ```bash
+    npm run start
+  ```
+  > There is nodemon package.
 
+## 4: Explaning the project.
+This is the backend part of a aplication, the fronted (`reactJS`) could be find in [this link]("https://github.com/germanruzca/wyt-frontend").
 
-Here the four end-points:
-- USERS
+There are four web services that provide the full CRUD.
+
+Here the four end-points to each web service:
+### USERS: 
+> people regesterd on the aplication
   - localhost/3001/users
-- POSTS
+  
+    [routes]("/../src/routes/users.route.js") /
+    [controller]("./../src/controllers/users.controller.js) /
+    [model](src/database/models/users.model.js)
+### POSTS: 
+> the post with the recommendations.
   - localhost/3001/posts
-- TYPES
+
+    [routes]("/../src/routes/posts.route.js") /
+    [controller]("./../src/controllers/posts.controller.js) /
+    [model](src/database/models/posts.model.js)
+### TYPES
+>storage the differents types of recomendations.
+  
   - localhost/3001/types
-- AUTH
+
+    [routes]("/../src/routes/types.route.js") /
+    [controller]("./../src/controllers/types.controller.js) /
+    [model](src/database/models/types.model.js)
+### AUTH: 
+> to the login and sign up.
   - localhost/3001/auth
+
+    [routes]("/../src/routes/auth.route.js") /
+    [controller]("./../src/controllers/auth.controller.js)
