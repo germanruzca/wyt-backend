@@ -4,10 +4,10 @@ const auth = require('../middlewares/auth');
 
 const { getUsers, getUserById, createUser, updateUser, deleteUser } = require('../controllers/users.controller')
 
-router.get('/:id', auth.checkAuth, getUserById);
 router.get('/', auth.checkAuth, getUsers);
-router.post('/', auth.checkAuth, createUser);
-router.put('/:id', auth.checkAuth, updateUser);
+router.get('/:id', auth.checkAuth, getUserById);
+router.post('/',auth.checkAuth, createUser);
+router.put('/:id',  auth.checkAuth, updateUser);
 router.delete('/:id', auth.checkAuth, deleteUser);
 
 module.exports = router;

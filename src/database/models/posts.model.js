@@ -26,16 +26,12 @@ module.exports = function( sequelize, DataTypes) {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      mediaAuthor: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
       userId: {
         type: DataTypes.UUID,
         allowNull: false,
       },
       typeId: {
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: false,
       }
     },

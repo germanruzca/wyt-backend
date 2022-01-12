@@ -1,22 +1,42 @@
-const { Post: Post, sequelize: t } = require('../database');
+const { Post: Post, User: User, Type: Type, sequelize: t } = require('../database');
 const {jsonResponse} = require('../lib/response/jsonResponse');
 
 const postsController = {
   getPosts: async (req, res, next) => {
     try {
-      const posts = await Post.findAll();
+      const posts = await Post.findAll({
+        include: [{
+          model:User,
+          required: true,
+        },
+        {
+          model: Type,
+          required: true,
+        }
+        ]
+      });
 
       res.json(jsonResponse(200, posts));
 
     } catch (error) {
-      res.json(jsonResponse(500, error));
+      res.json(jsonResponse(500, error.message));
     }
   },
   getPostById: async (req, res, next) => {
     const { id } = req.params;
 
     try {
-      const post = Post.findByPk(id);
+      const post = await Post.findByPk(id,{
+        include: [{
+          model:User,
+          required: true,
+        },
+        {
+          model: Type,
+          required: true,
+        }
+        ]
+      });
 
       res.json(jsonResponse(200, post));
 

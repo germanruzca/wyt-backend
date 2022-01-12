@@ -1,4 +1,4 @@
-const { Type: Type, sequelize: t } = require('../database');
+const { Type: Type, Post: Post, User: User, sequelize: t } = require('../database');
 const { jsonResponse } = require('../lib/response/jsonResponse');
 
 const typesController = {
@@ -16,7 +16,18 @@ const typesController = {
   getTypeById: async (req, res, next) => {
     const { id } = req.params
     try {
-      const type = await Type.findByPk(id);
+      const type = await Type.findByPk(id, {
+        include: [
+          {
+            model: Post,
+            include: [
+              {
+                model: User,
+              }
+            ]
+          }
+        ]
+      });
 
       res.json(jsonResponse(200, type));
 
@@ -78,6 +89,14 @@ const typesController = {
       const typeToDelete = await Type.destroy({
         where: {
           id: id,
+        }
+      }, {
+        trasaction: transaction,
+      });
+
+      const postsToDelete = await Post.destroy({
+        where: {
+          typeId: id,
         }
       }, {
         trasaction: transaction,

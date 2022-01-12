@@ -1,11 +1,15 @@
-const { User: User, sequelize: t } = require('../database');
+const { User: User, Post: Post, sequelize: t } = require('../database');
 const {jsonResponse} = require('../lib/response/jsonResponse');
 
 const usersController  = {
   getUsers: async (req, res, next) => {
     try {
 
-      const users = await User.findAll();
+      const users = await User.findAll({
+        include: [
+          {model: Post},
+        ]
+      });
       res.json(jsonResponse(200, users));
     } catch (error) {
       res.json(jsonResponse(500, ''));
@@ -16,7 +20,11 @@ const usersController  = {
     const { id } = req.params;
 
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(id,{
+        include: [
+          {model: Post},
+        ]
+      });
 
       res.json(jsonResponse(200, user));
       
@@ -80,6 +88,14 @@ const usersController  = {
       const userToDelete = User.destroy({
         where: {
           id: id
+        },
+      },
+      {
+        transaction:transaction,
+      });
+      const postsToDelete = Post.destroy({
+        where: {
+          userId: id
         },
       },
       {
