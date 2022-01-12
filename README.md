@@ -1,6 +1,6 @@
 # API app of WYT ( What you thinking?).
 
-This repository is part of my WYT.com project, is just an aplication to give recommendations of movies, books, tv-shows and music.
+This repository is part of my WYT.com project, is just an application to give recommendations of movies, books, tv-shows and music.
 
 ## 1: Technologies
 - nodeJS
@@ -14,7 +14,7 @@ This repository is part of my WYT.com project, is just an aplication to give rec
 ## 2: Requirements
 You need Docker and Docker Compose on your computer, because there is a `docker-compose.yml` file that creates a container to the Postgres database.
 
-Also you need nodeJS, this project were maded in the 16 version of node.
+Also you need nodeJS, this project was made in the 16 version of node.
 
 ## 3: Clone and run the project.
 
@@ -62,13 +62,13 @@ You can create a `.env` file or in ZSH
   > The backend starts in the 3001 port, sync with frontend.
 
 ## 4: Explaning the project.
-This is the backend part of a aplication, the fronted (`reactJS`) could be find in [this link]("https://github.com/germanruzca/wyt-frontend").
+This is the backend part of an application, the fronted (`reactJS`) could be find in [this link]("https://github.com/germanruzca/wyt-frontend").
 
 There are four web services that provide the full CRUD.
 
 Here the four end-points to each web service:
 ### USERS: 
-> people regesterd on the aplication
+> people registered on the application
   - localhost/3001/users
   
     [routes]("/../src/routes/users.route.js") /
@@ -82,7 +82,7 @@ Here the four end-points to each web service:
     [controller]("./../src/controllers/posts.controller.js) /
     [model](src/database/models/posts.model.js)
 ### TYPES
->storage the differents types of recomendations.
+>storage the differents types of recommendations.
   
   - localhost/3001/types
 
@@ -90,7 +90,7 @@ Here the four end-points to each web service:
     [controller]("./../src/controllers/types.controller.js) /
     [model](src/database/models/types.model.js)
 ### AUTH: 
-> to the login and sign up.
+> to login and sign up.
   - localhost/3001/auth
 
     [routes]("/../src/routes/auth.route.js") /
@@ -98,7 +98,7 @@ Here the four end-points to each web service:
 
 ## 5: JWT
 
-Fisrt, you need create a user, `localhost/3001/auth/signup`
+First, you need create a user, `localhost/3001/auth/signup`
   ```json
   {
     "firstName": "John",
@@ -107,7 +107,7 @@ Fisrt, you need create a user, `localhost/3001/auth/signup`
     "password": "john123",
   }
   ```
-When you are in, you recive a response with an accesToken to use in others requests. You need to login (`localhost/3001/auth/login`) every time the token has expired.
+When you are in, you receive a response with an accesToken to use in others requests. You need to login (`localhost/3001/auth/login`) every time the token has expired.
 
 (For now, there is no data when the models are created, so you must to know: to create a post is need create at least a type and a user.)
 
