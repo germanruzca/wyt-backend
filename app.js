@@ -14,7 +14,7 @@ const authRouter = require('./src/routes/auth.route');
 db = require('./src/database');
 
 
-db.sequelize.sync().then(() => console.log('DB connected')).catch(err => console.log(err));
+db.sequelize.sync({force: true}).then(() => console.log('DB connected')).catch(err => console.log(err));
 
 const app = express();
 app.use(cors())

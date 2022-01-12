@@ -6,7 +6,7 @@ const { getUsers, getUserById, createUser, updateUser, deleteUser } = require('.
 
 router.get('/', auth.checkAuth, getUsers);
 router.get('/:id', auth.checkAuth, getUserById);
-router.post('/',auth.checkAuth, createUser);
+router.post('/', auth.checkAuth, createUser);
 router.put('/:id',  auth.checkAuth, updateUser);
 router.delete('/:id', auth.checkAuth, deleteUser);
 

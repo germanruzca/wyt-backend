@@ -28,10 +28,6 @@ module.exports = function( sequelize, DataTypes){
         type: DataTypes.TEXT,
         allowNull: true,
       },
-      favoriteContent: {
-        type: DataTypes.STRING,
-        allowNull: true,
-      },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -49,14 +45,6 @@ module.exports = function( sequelize, DataTypes){
             msg: "The password can't be empty.",
           },
         },
-      },
-      typeUser: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      isActive: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
       },
       createdAt: {
         type: DataTypes.DATE,

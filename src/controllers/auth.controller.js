@@ -16,8 +16,6 @@ const authController = {
   signUp: async (req, res, next) => {
     const user = req.body;
     const { username, password } = user;
-    user.isActive = true;
-    user.typeUser = true;
 
     const transaction = await t.transaction();
 
