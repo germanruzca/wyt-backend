@@ -109,4 +109,8 @@ Fisrt, you need create a user, `localhost/3001/auth/signup`
   ```
 When you are in, you recive a response with an accesToken to use in others requests. You need to login (`localhost/3001/auth/login`) every time the token has expired.
 
+(For now, there is no data when the models are created, so you must to know: to create a post is need create at least a type and a user.)
+
+You can see example:
+
 [![View Api in Postman](https://run.pstmn.io/button.svg)](https://documenter.getpostman.com/view/14129745/UVXhobVi)
