@@ -28,7 +28,7 @@ const typesController = {
           }
         ]
       });
-
+      if(!type) return res.json(jsonResponse(500, 'ID no exists.'));
       res.json(jsonResponse(200, type));
 
     } catch (error) {
@@ -42,7 +42,6 @@ const typesController = {
     try {
       const typeToCreate = await Type.create(type, {
         hooks: true,
-        individualHooks: true,
         transaction: transaction,
       });
       
@@ -66,7 +65,6 @@ const typesController = {
           id: id,
         },
         hooks: true,
-        individualHooks: true,
         returning: true,
         transaction: transaction,
       });

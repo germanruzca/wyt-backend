@@ -65,7 +65,6 @@ const authController = {
           username: username,
         },
       });
-
       if (user) {
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (isValidPassword) {

@@ -25,7 +25,7 @@ const usersController  = {
           {model: Post},
         ]
       });
-
+      if(!user) return res.json(jsonResponse(500, 'ID no exists.'));
       res.json(jsonResponse(200, user));
       
     } catch (error) {
@@ -40,7 +40,6 @@ const usersController  = {
     try {
       const userCreated = await User.create(user, {
         hooks: true,
-        individualHooks: true,
         transaction: transaction,
       });
 
@@ -56,16 +55,13 @@ const usersController  = {
   updateUser: async (req, res, next) => {
     const { id } = req.params;
     const user = req.body;
-
     const transaction = await t.transaction();
-
     try {
       const userUpdated = await User.update(user, {
         where: {
           id: id,
         },
         hooks: true,
-        individualHooks: true,
         returning: true,
         transaction: transaction,
       });

@@ -37,7 +37,7 @@ const postsController = {
         }
         ]
       });
-
+      if(!post) return res.json(jsonResponse(500, 'ID no exists.'));
       res.json(jsonResponse(200, post));
 
     } catch (error) {
@@ -52,7 +52,6 @@ const postsController = {
     try {
       const postToCreate = await Post.create(post, {
         hooks: true,
-        individualHooks: true,
         transaction: transaction,
       });
 
@@ -66,9 +65,8 @@ const postsController = {
     }
   },
   updatePost: async (req, res, next) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     const post = req.body;
-
     const transaction = await t.transaction();
 
     try {
@@ -76,8 +74,6 @@ const postsController = {
         where: {
           id: id,
         },
-        hooks: true,
-        individualHooks: true,
         returning: true,
         transaction: transaction,
       });
@@ -94,9 +90,8 @@ const postsController = {
   deletePost: async (req, res, next) => {
     const { id } = req.params;
     const transaction = await t.transaction();
-
     try {
-      const postToDelete = await Type.destroy({
+      const postToDelete = await Post.destroy({
         where: {
           id: id,
         }
