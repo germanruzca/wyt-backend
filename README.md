@@ -28,6 +28,23 @@ Also you need nodeJS, this project were maded in the 16 version of node.
   ```bash
   npm install
   ```
+- Introduce the environment variables
+
+You can create a `.env` file or in ZSH
+
+  ```bash
+    WYT="~/wyt"
+    WYT_PSQL_HOST="0.0.0.0"
+    WYT_PSQL_CONTAINER_NAME="wyt_postgres"
+    WYT_PSQL_LISTEN_PORT="5001"
+    WYT_PSQL_VOLUME_PATH="${WYT}/postgres/data"
+    WYT_PSQL_DB="wyt_databse"
+    WYT_PSQL_USER="wyt_user"
+    WYT_PSQL_PASSWORD="passwordDB"
+    WYT_ACTION_SECRET="passwordAccess"
+    WYT_REFRESH_SECRET="passwordRefresh"
+  ```
+
 - Go the docker folder
   ```bash
    cd containers
@@ -41,6 +58,8 @@ Also you need nodeJS, this project were maded in the 16 version of node.
     npm run start
   ```
   > There is nodemon package.
+
+  > The backend starts in the 3001 port, sync with frontend.
 
 ## 4: Explaning the project.
 This is the backend part of a aplication, the fronted (`reactJS`) could be find in [this link]("https://github.com/germanruzca/wyt-frontend").
