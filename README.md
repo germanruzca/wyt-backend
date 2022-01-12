@@ -8,6 +8,7 @@ This repository is part of my WYT.com project, is just an aplication to give rec
 - Docker
 - Sequelize
 - Postrgres
+- JWT
 ****
   
 ## 2: Requirements
@@ -75,3 +76,16 @@ Here the four end-points to each web service:
 
     [routes]("/../src/routes/auth.route.js") /
     [controller]("./../src/controllers/auth.controller.js)
+
+## 5: JWT
+
+Fisrt, you need create a user, `localhost/3001/auth/signup`
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Lennon",
+    "username": "john123",
+    "password": "john123",
+  }
+  ```
+When you are in, you recive a response with an accesToken to use in others requests. You need to login (`localhost/3001/auth/login`) every time the token has expired.
