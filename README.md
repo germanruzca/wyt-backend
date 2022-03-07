@@ -3,7 +3,7 @@
 This repository is part of my WYT.com project, is just an application to give recommendations of movies, books, tv-shows and music.
 
 ## 1: Technologies
-- nodeJS
+- nodeJS 
 - Express
 - Docker
 - Sequelize
